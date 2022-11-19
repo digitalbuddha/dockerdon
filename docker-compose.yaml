@@ -14,7 +14,13 @@ services:
           - ./service/traefik/letsencrypt:/letsencrypt
           - ./service/traefik/data:/data
           - /var/run/docker.sock:/var/run/docker.sock:ro
-            
+
+    ddclient:
+        image: lscr.io/linuxserver/ddclient:latest
+        volumes:
+            - ./service/ddclient/config:/config
+        restart: unless-stopped
+     
     ok:
       image: peterevans/ok-server:latest
       labels:
