@@ -1,0 +1,29 @@
+http:
+    middlewares:
+    
+        middlewares-rate-limit:
+            rateLimit:
+                average: 200
+                burst: 100
+
+        middlewares-secure-headers:
+            headers:
+                accessControlAllowMethods: ["GET", "OPTIONS", "PUT", "POST"]
+                accessControlMaxAge: 100
+                hostsProxyHeaders: ["X-Forwarded-Host"]
+                stsSeconds: 63072000
+                stsIncludeSubdomains: true
+                stsPreload: true
+                forceSTSHeader: true
+                contentTypeNosniff: true 
+                browserXssFilter: true 
+                referrerPolicy: same-origin
+                permissionsPolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';" 
+                contentSecurityPolicy: frame-ancestors 'self' https://androiddev.social;
+                customResponseHeaders:
+                    X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
+                    server: ""
+
+        chain-no-auth:
+            chain:
+                middlewares: [ "middlewares-rate-limit", "middlewares-secure-headers"]
